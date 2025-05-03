@@ -4,51 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Points Calculator</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      background: #f4f4f4;
-    }
-
-    .container {
-      max-width: 500px;
-      margin: auto;
-      background: white;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-
-    label {
-      display: block;
-      margin-top: 20px;
-      font-weight: bold;
-      color: #555;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    .result-box {
-      margin-top: 30px;
-      padding: 20px;
-      background-color: #e8f5e9;
-      border-left: 5px solid #4caf50;
-      font-size: 18px;
-      color: #2e7d32;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
@@ -70,31 +26,6 @@
     </div>
   </div>
 
-  <script>
-    // Example JS to show how to respond to input
-    const timeInput = document.getElementById("timeInput");
-    const eventSelect = document.getElementById("eventSelect");
-    const resultBox = document.getElementById("resultBox");
-
-    function computePoints(event, time) {
-      if (!event || isNaN(time)) return "Invalid input.";
-
-      // Dummy formula for example
-      if (event === "100m") return (25 - time) * 10;
-      if (event === "longJump") return (time * 30);
-      if (event === "highJump") return (time * 40);
-      return "Event not recognized.";
-    }
-
-    function updateResult() {
-      const time = parseFloat(timeInput.value);
-      const event = eventSelect.value;
-      const points = computePoints(event, time);
-      resultBox.textContent = `Points: ${points}`;
-    }
-
-    timeInput.addEventListener("input", updateResult);
-    eventSelect.addEventListener("change", updateResult);
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
