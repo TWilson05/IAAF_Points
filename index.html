@@ -8,32 +8,28 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Points Calculator</h1>
-
-    <label for="timeInput">Enter Time (e.g. 12.34)</label>
-    <input type="text" id="timeInput" placeholder="Enter time here" />
-
-    <label for="genderSelect">Select Gender</label>
-    <select id="genderSelect">
-      <option value="">-- Select Gender --</option>
-      <option value="male">Male</option>
-      <option value="female">Female</option>
-    </select>
-
-    <label for="eventSelect">Select Event</label>
-    <select id="eventSelect">
-      <option value="">-- Choose an Event --</option>
-      <option value="100m">100m Sprint</option>
-      <option value="longJump">Long Jump</option>
-      <option value="highJump">High Jump</option>
-    </select>
-
-    <div class="result-box" id="resultBox">
-      Result will appear here.
+    <div class="container">
+      <h1>Points Calculator</h1>
+  
+      <label for="timeInput">Enter Time</label>
+      <input type="number" id="timeInput" placeholder="e.g. 12.34" />
+  
+      <label for="genderSelect">Select Gender</label>
+      <select id="genderSelect">
+        <option value="Men">Men</option>
+        <option value="Women">Women</option>
+      </select>
+  
+      <label for="eventSelect">Select Event</label>
+      <select id="eventSelect">
+        <option value="">-- Choose an Event --</option>
+      </select>
+  
+      <div class="result-box" id="resultBox">
+        Result will appear here.
+      </div>
     </div>
-  </div>
-
-  <script src="script.js"></script>
-</body>
+  
+    <script src="script.js"></script>
+  </body>
 </html>
