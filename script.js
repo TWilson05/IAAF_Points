@@ -29,13 +29,32 @@ document.addEventListener("DOMContentLoaded", () => {
         eventSelect.appendChild(opt);
       }
     }
+
+    function convertTimeToSeconds(timeStr) {
+        if (!timeStr) return NaN;
+        
+        const parts = timeStr.split(":").map(parseFloat);
+        if (parts.length === 1) {
+            return parts[0]; // e.g., "12.34"
+        } else if (parts.length === 2) {
+            // mm:ss.ss
+            const [minutes, seconds] = parts;
+            return minutes * 60 + seconds;
+        } else if (parts.length === 3) {
+            // hh:mm:ss.ss
+            const [hours, minutes, seconds] = parts;
+            return hours * 3600 + minutes * 60 + seconds;
+        } else {
+            return NaN; // Invalid format
+        }
+    }
   
     function computePoints(a, b, c, x) {
-      return a + b * x + c * x * x;
+      return a * Math.pow(x + b, 2) + c;
     }
   
     function updateResult() {
-      const x = parseFloat(timeInput.value);
+      const x = convertTimeToSeconds(timeInput.value);
       const gender = genderSelect.value;
       const event = eventSelect.value;
   
