@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
       const [a, b, c] = fullData[gender][event];
       const points = computePoints(a, b, c, x);
-      resultBox.textContent = `Points: ${Math.round(points)}`;
+      resultBox.textContent = `Points: ${Math.floor(points)}`;
     }
   
     timeInput.addEventListener("input", updateResult);
