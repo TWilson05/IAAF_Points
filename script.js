@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let fullData = {};
 
     // Load JSON
-    fetch("2025_fit_params.json")
+    fetch("2025_lookup_table.json")
         .then(res => res.json())
         .then(data => {
             fullData = data;
@@ -48,12 +48,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function lookupPoints(timesList, inputTime) {
-        for (let i = 0; i < timesList.length; i++) {
-            if (inputTime <= timesList[i]) {
-                return 1400 - i;
+        if (!timesList || timesList.length === 0) return 0;
+
+        // Detect order
+        const ascending = timesList[0] < timesList[timesList.length - 1];
+
+        if (ascending) {
+            // Smaller time = more points
+            for (let i = 0; i < timesList.length; i++) {
+                if (inputTime <= timesList[i]) {
+                    return 1400 - i;
+                }
+            }
+        } else {
+            // Larger time = more points (rare, but handle just in case)
+            for (let i = 0; i < timesList.length; i++) {
+                if (inputTime >= timesList[i]) {
+                    return 1400 - i;
+                }
             }
         }
-        return 0; // slower than last value
+
+        return 0; // Slower than the last value
     }
 
     function adjustForWind(points, windStr) {
