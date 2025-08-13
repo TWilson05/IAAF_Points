@@ -113,17 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Only apply penalty if drop > 1 m/km
         if (drop <= 1.0) return points;
 
-        // Over the 1 m/km threshold:
-        // For the first extra 1.0 m/km: 6 points
-        // Then every additional 0.1 m/km: 0.6 points on top of the base rate
-        // Formula from your rule: penalty = (drop) * 6 points per m/km
-        // But with extra scaling for >1.0 m/km
-        const excess = drop - 1.0;
-        const penalty = 6 + excess * 6; // base 6 + proportional scaling
-
-        // Actually, from your rule: "Over the net drop of 1 m/km every 0.1 m/km is equal to 6 + 0.6 points for each 0.1 m/km."
-        // This means penalty per m/km = 6 + 0.6*(10*excess)
-        const penaltyPoints = (6 + 0.6 * (excess * 10)) * excess;
+        const penaltyPoints = (0.6 * drop);
 
         return points - penaltyPoints;
     }
