@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let points = lookupPoints(timesList, x);   // Base points from table
         points = adjustForWind(points, windInput.value); // Apply wind adjustment
 
-        resultBox.textContent = `Points: ${Math.round(points)}`;
+        resultBox.textContent = `Points: ${Math.floor(points)}`;
     }
 
     timeInput.addEventListener("input", updateResult);
