@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const eventSelect = document.getElementById("eventSelect");
     const genderSelect = document.getElementById("genderSelect");
     const windInput = document.getElementById("windInput");
+    const elevationInput = document.getElementById("elevationInput");
     const resultBox = document.getElementById("resultBox");
 
     let fullData = {};
@@ -141,6 +142,8 @@ document.addEventListener("DOMContentLoaded", () => {
     timeInput.addEventListener("input", updateResult);
     eventSelect.addEventListener("change", updateResult);
     windInput.addEventListener("input", updateResult);
+    elevationInput.addEventListener("input", updateResult);
+
     genderSelect.addEventListener("change", () => {
         populateEvents(genderSelect.value);
         resultBox.textContent = "Result will appear here.";
