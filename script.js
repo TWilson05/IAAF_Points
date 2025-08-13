@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Only apply penalty if drop > 1 m/km
         if (drop <= 1.0) return points;
 
-        const penaltyPoints = (0.6 * drop);
+        const penaltyPoints = (6 * drop);
 
         return points - penaltyPoints;
     }
