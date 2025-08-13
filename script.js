@@ -2,12 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const timeInput = document.getElementById("timeInput");
     const eventSelect = document.getElementById("eventSelect");
     const genderSelect = document.getElementById("genderSelect");
+    const windInput = document.getElementById("windInput");
     const resultBox = document.getElementById("resultBox");
 
     let fullData = {};
 
     // Load JSON
-    fetch("2025_lookup_table.json")
+    fetch("2025_fit_params.json")
         .then(res => res.json())
         .then(data => {
             fullData = data;
@@ -49,11 +50,32 @@ document.addEventListener("DOMContentLoaded", () => {
     function lookupPoints(timesList, inputTime) {
         for (let i = 0; i < timesList.length; i++) {
             if (inputTime <= timesList[i]) {
-                // Map index 0 → 1400 points, index 1 → 1399, etc.
                 return 1400 - i;
             }
         }
         return 0; // slower than last value
+    }
+
+    function adjustForWind(points, windStr) {
+        if (!windStr || windStr.trim().toUpperCase() === "NWI") {
+            return points - 30; // No wind info penalty
+        }
+
+        const wind = parseFloat(windStr);
+        if (isNaN(wind)) return points; // Invalid input, no change
+
+        const pointsPerMs = 6;
+
+        if (wind < 0) {
+            // Headwind: positive points
+            return points + (Math.abs(wind) * pointsPerMs);
+        } else if (wind <= 2.0) {
+            // No change for tailwind up to +2.0 m/s
+            return points;
+        } else {
+            // Tailwind > +2.0 m/s: deduct points starting from 0.0 m/s
+            return points - (wind * pointsPerMs);
+        }
     }
 
     function updateResult() {
@@ -67,12 +89,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const timesList = fullData[gender][event];
-        const points = lookupPoints(timesList, x);
-        resultBox.textContent = `Points: ${points}`;
+        let points = lookupPoints(timesList, x);
+        points = adjustForWind(points, windInput.value);
+        resultBox.textContent = `Points: ${Math.round(points)}`;
     }
 
     timeInput.addEventListener("input", updateResult);
     eventSelect.addEventListener("change", updateResult);
+    windInput.addEventListener("input", updateResult);
     genderSelect.addEventListener("change", () => {
         populateEvents(genderSelect.value);
         resultBox.textContent = "Result will appear here.";
