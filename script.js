@@ -57,23 +57,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function adjustForWind(points, windStr) {
-        if (!windStr || windStr.trim().toUpperCase() === "NWI") {
-            return points - 30; // No wind info penalty
+        // If user leaves blank → no adjustment
+        if (!windStr.trim()) {
+            return points;
+        }
+
+        // Handle NWI (No Wind Info) case
+        if (windStr.trim().toUpperCase() === "NWI") {
+            return points - 30; // Deduct 30 points
         }
 
         const wind = parseFloat(windStr);
-        if (isNaN(wind)) return points; // Invalid input, no change
+        if (isNaN(wind)) {
+            // Invalid input → no adjustment
+            return points;
+        }
 
         const pointsPerMs = 6;
 
         if (wind < 0) {
-            // Headwind: positive points
+            // Headwind: add points
             return points + (Math.abs(wind) * pointsPerMs);
         } else if (wind <= 2.0) {
-            // No change for tailwind up to +2.0 m/s
+            // Tailwind up to +2.0 m/s: no change
             return points;
         } else {
-            // Tailwind > +2.0 m/s: deduct points starting from 0.0 m/s
+            // Tailwind > +2.0 m/s: deduct points (starting from 0.0 m/s)
             return points - (wind * pointsPerMs);
         }
     }
@@ -89,8 +98,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const timesList = fullData[gender][event];
-        let points = lookupPoints(timesList, x);
-        points = adjustForWind(points, windInput.value);
+        let points = lookupPoints(timesList, x);   // Base points from table
+        points = adjustForWind(points, windInput.value); // Apply wind adjustment
+
         resultBox.textContent = `Points: ${Math.round(points)}`;
     }
 
