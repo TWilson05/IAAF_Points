@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let fullData = {};
 
     // Load JSON
-    fetch("2025_lookup_table.json")
+    fetch("2025.2_lookup_table.json")
         .then(res => res.json())
         .then(data => {
             fullData = data;
